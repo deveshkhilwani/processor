@@ -6,7 +6,7 @@ use work.components.all;
 entity datapath is
    port(clk,reset: in std_logic;
 	--alu
-	op_code:in std_logic_vector(1 downto 0);
+	op_code_sel:in std_logic;
 	alu_a_sel,alu_b_sel:in std_logic_vector(1 downto 0);
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:in std_logic;
@@ -34,6 +34,7 @@ architecture fullon of datapath is
 	signal ir_new: std_logic_vector(7 downto 0);
 	signal pe_out,A2_in,A3_in: std_logic_vector(2 downto 0);
 	signal flag: std_logic;
+	signal op_code: std_logic_vector(1 downto 0);
 	signal c_in,c_out,z_in,z_out: std_logic_vector(0 downto 0);
 	constant c1: std_logic_vector(15 downto 0):=(0=>'1',others=>'0');
 begin
@@ -58,6 +59,12 @@ begin
 		se6_out when alu_b_sel="01" else
 		t2_out when alu_b_sel="10" else
 		c1 when alu_b_sel="11";
+	op_code<= "00" when op_code_sel='0' else
+		  ir_out(14 downto 13);			
+	--instruction opcode for add is 0000 => op_code is"00" i.e. addition
+	--instruction opcode for nand is 0010 => op_code is"01" i.e. nand
+	--instruction opcode for beq is 0100 => op_code is"10" i.e. xor
+
 
 	alu_instance: alu port map(alu_a,alu_b,alu_out,c_in(0),z_in(0),op_code);
 
@@ -97,6 +104,13 @@ begin
 		R7_out;
 	RF: reg_file port map(ir_out(11 downto 9),A2_in,A3_in,D3_in,D1,D2,
 				 clk,reset,alu_out,t2_out,t3_out,R7_out,data_sel,RF_write,R7_write);
+
+--	R7_in<= c0 when reset='1' else
+--		alu_out when data_sel="00" else
+--	        D3 when data_sel="01" else
+--	        t2_out when data_sel="10" else
+--	        t3_out when data_sel="11";
+
 --pe
 	pe:priority_encoder port map(ir_out(7 downto 0),pe_out,ir_new,pe_flag);
 --mem
