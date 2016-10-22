@@ -12,8 +12,8 @@ entity datapath is
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:in std_logic;
 	--RF
 	A2_sel:in std_logic;
-	A3_sel,data_sel:in std_logic_vector(1 downto 0);
-	D3_sel: in std_logic_vector(2 downto 0);
+	A3_sel:in std_logic_vector(1 downto 0);
+	D3_sel,data_sel: in std_logic_vector(2 downto 0);
 	RF_write: in std_logic;
 	R7_write: in std_logic;
 	--IR
@@ -23,8 +23,12 @@ entity datapath is
 	mem_write_en: in std_logic;
 	adrs_sel: in std_logic_vector(1 downto 0);
 	mem_in_sel:in std_logic;
+	--priority_encoder
+	pe_en,pe_sel:in std_logic;
 
 	--output
+	instruction_part1:out std_logic_vector(3 downto 0);
+	instruction_part2:out std_logic_vector(1 downto 0);
 	pe_flag,carry,zero: out std_logic);
 end entity;
 
@@ -38,6 +42,8 @@ architecture fullon of datapath is
 	signal c_in,c_out,z_in,z_out: std_logic_vector(0 downto 0);
 	constant c1: std_logic_vector(15 downto 0):=(0=>'1',others=>'0');
 begin
+	instruction_part1<=ir_out(15 downto 12);
+	instruction_part2<=ir_out(1 downto 0);
 --registers
 	t1: DataRegister generic map(data_width=>16) port map(Din=>t1_in , Dout=>t1_out , Enable=>t1_en , clk=>clk);
 	t2: DataRegister generic map(data_width=>16) port map(Din=>t2_in , Dout=>t2_out , Enable=>t2_en , clk=>clk);
@@ -102,17 +108,19 @@ begin
 		t3_out when D3_sel="010" else
 		tp_out when D3_sel="011" else
 		R7_out;
+	
 	RF: reg_file port map(ir_out(11 downto 9),A2_in,A3_in,D3_in,D1,D2,
-				 clk,reset,alu_out,t2_out,t3_out,R7_out,data_sel,RF_write,R7_write);
+				 clk,reset,alu_out,t2_out,t3_out,R7_out,z_in(0),data_sel,RF_write,R7_write);
 
 --	R7_in<= c0 when reset='1' else
---		alu_out when data_sel="00" else
---	        D3 when data_sel="01" else
---	        t2_out when data_sel="10" else
---	        t3_out when data_sel="11";
+--		alu_out when data_sel="000" else
+--	        D3 when data_sel="001" else
+--	        t2_out when data_sel="010" else
+--	        t3_out when data_sel="011" else
+--		zero_t3_out;
 
 --pe
-	pe:priority_encoder port map(ir_out(7 downto 0),pe_out,ir_new,pe_flag);
+	pe:priority_encoder port map(ir_out(7 downto 0),pe_out,pe_en,pe_sel,clk,pe_flag);
 --mem
 	adrs <= t1_out when adrs_sel="01" else
 		t3_out when adrs_sel="10" else

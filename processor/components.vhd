@@ -40,8 +40,9 @@ component reg_file is
 	t2_out: in std_logic_vector(15 downto 0);
 	t3_out: in std_logic_vector(15 downto 0);
 	R7_data: out std_logic_vector(15 downto 0);
+	z:in std_logic;
 	--control signals
-	data_sel: in std_logic_vector(1 downto 0);
+	data_sel: in std_logic_vector(2 downto 0);
 	RF_write: in std_logic;
 	R7_write: in std_logic);
 end component;
@@ -58,9 +59,9 @@ component sign_ext9 is
 	y: out std_logic_vector(15 downto 0));
 end component;
 component priority_encoder is
-   port(a: in std_logic_vector(7 downto 0);
-	b: out std_logic_vector(2 downto 0);
-	input_modifier: out std_logic_vector(7 downto 0);
+   port(input: in std_logic_vector(7 downto 0);
+	output: out std_logic_vector(2 downto 0);
+	modify_en,input_sel,clk: in std_logic;
 	flag: out std_logic);
 end component;
 component bram is

@@ -16,8 +16,9 @@ entity reg_file is
 	t2_out: in std_logic_vector(15 downto 0);
 	t3_out: in std_logic_vector(15 downto 0);
 	R7_data: out std_logic_vector(15 downto 0);
+	z:in std_logic;
 	--control signals
-	data_sel: in std_logic_vector(1 downto 0);
+	data_sel: in std_logic_vector(2 downto 0);
 	RF_write: in std_logic;
 	R7_write: in std_logic);
 end entity;
@@ -26,7 +27,7 @@ architecture mudi of reg_file is
 	signal r_en,r_sel: std_logic_vector(7 downto 0);
 	type a_vector is array(7 downto 0) of std_logic_vector(15 downto 0);
 	signal r_out: a_vector;
-	signal D_in,R7_in: std_logic_vector(15 downto 0);
+	signal D_in,R7_in,zero_t3_out: std_logic_vector(15 downto 0);
 	constant c0: std_logic_vector(15 downto 0):=(others=>'0');
 begin
 	R0: DataRegister generic map(data_width=>16) port map(Din=>D_in , Dout=>r_out(0) , Enable=>r_en(0) , clk=>clk);
@@ -73,10 +74,13 @@ begin
 --input data
 	D_in<=c0 when reset='1' else D3;
 
+	zero_t3_out<=t3_out when z='1' else
+			r_out(7);
 	R7_in<= c0 when reset='1' else
-		alu_out when data_sel="00" else
-	        D3 when data_sel="01" else
-	        t2_out when data_sel="10" else
-	        t3_out when data_sel="11";
+		alu_out when data_sel="000" else
+	        D3 when data_sel="001" else
+	        t2_out when data_sel="010" else
+	        t3_out when data_sel="011" else
+		zero_t3_out;
 end mudi;
 

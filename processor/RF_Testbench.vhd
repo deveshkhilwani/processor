@@ -11,7 +11,7 @@ end entity;
 architecture Behave of RF_Testbench is
   signal A1,A2,A3: std_logic_vector(2 downto 0);
   signal D1,D2,D3,alu_out,T2,T3,R7_data: std_logic_vector(15 downto 0); 
- signal data_sel: std_logic_vector(1 downto 0);
+ signal data_sel: std_logic_vector(2 downto 0);
   signal clk: std_logic := '0';
   signal reset: std_logic := '1';
 signal R7_write, RF_write: std_logic;
@@ -111,7 +111,8 @@ begin
 	  alu_out <= to_std_logic_vector(alu_out_var);
 	  T2 <= to_std_logic_vector(T2_var);
 	  T3 <= to_std_logic_vector(T3_var);
-	  data_sel <= to_std_logic_vector(data_sel_var);
+	  data_sel(2)<='0';
+	  data_sel(1 downto 0) <= to_std_logic_vector(data_sel_var);
 	  RF_write <= to_std_logic(RF_write_var);
 	  R7_write <= to_std_logic(R7_write_var);
 
@@ -157,7 +158,7 @@ begin
   end process;
 
   dut: reg_file 
-     port map(A1 => A1,
+     port map(A1 => A1,z=>'1',
               A2 => A2,
               A3 => A3,
               clk => clk,
