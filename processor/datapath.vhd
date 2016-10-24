@@ -46,7 +46,7 @@ begin
 --registers
 	t1: DataRegister generic map(data_width=>16) port map(Din=>t1_in , Dout=>t1_out , Enable=>t1_en , clk=>clk);
 	t2: DataRegister generic map(data_width=>16) port map(Din=>t2_in , Dout=>t2_out , Enable=>t2_en , clk=>clk);
-	t3: DataRegister generic map(data_width=>16) port map(Din=>t3_in , Dout=>t1_out , Enable=>t3_en , clk=>clk);
+	t3: DataRegister generic map(data_width=>16) port map(Din=>t3_in , Dout=>t3_out , Enable=>t3_en , clk=>clk);
 	tp: DataRegister generic map(data_width=>16) port map(Din=>tp_in , Dout=>tp_out , Enable=>tp_en , clk=>clk);
 	ir: DataRegister generic map(data_width=>16) port map(Din=>ir_in , Dout=>ir_out , Enable=>ir_en , clk=>clk);
 	c: DataRegister generic map(data_width=>1) port map(Din=>c_in , Dout=>c_out , Enable=>c_en , clk=>clk);

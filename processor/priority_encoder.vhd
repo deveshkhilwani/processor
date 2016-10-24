@@ -37,7 +37,7 @@ begin
 --Thus, input_modifier(i) is unchanged if there is at least one less significant position with a '1'
 	new_ip<=input_modifier when input_sel='1' else
 		input;
-	store: DataRegister generic map(data_width=>1) port map(Din=>new_ip , Dout=>a , Enable=>modify_en , clk=>clk);
+	store: DataRegister generic map(data_width=>8) port map(Din=>new_ip , Dout=>a , Enable=>modify_en , clk=>clk);
 
 end arrange;
 
