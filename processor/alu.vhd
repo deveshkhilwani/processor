@@ -20,8 +20,8 @@ begin
 	op2: nander port map (x=>x, y=>y, z=>nand_out);
 	op3: xorer port map (x=>x, y=>y, z=>xor_out);
 
-	alu_out<=add_out(15 downto 0) when op_code="01" else
-	   nand_out when op_code="10" else
+	alu_out<=add_out(15 downto 0) when op_code="00" else
+	   nand_out when op_code="01" else
 	   xor_out;
 	
 	z<=alu_out;
