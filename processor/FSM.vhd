@@ -75,15 +75,9 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 	     	  elsif (opcode1="0100" or opcode1="0101") then  --occurs in LW/SW
 			next_state := S7; 
 		  elsif (opcode1="0110") then                    --occurs in LM 
-			if (pe_flag='0') then 
-				next_state := S1; 
-			else next_state := S12;   
-			end if;   
+			next_state := S12; 
 		  elsif (opcode1="0111") then                    --occurs in SM
-			if (pe_flag='0') then 
-				next_state := S1; 
-			else next_state := S17;
-			end if; 
+			next_state := S17; 
                   elsif (opcode1="1100") then                   --occurs in BEQ			
 		        next_state := S10; 
 		  elsif (opcode1="1000") then                   --occurs in JAL 		
@@ -129,7 +123,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  control:= "00000000000000000000000000001100";
 		  next_state:= S1; 
 	  when S10=> 
-		  control:= "00000000000000000000000000001100"; 
+		  control:= "00101000000000001001000000000000"; 
 		  next_state:= S1; 
           when S11=> 
 		  control:= "00000000000000011000100100000000"; 
@@ -137,7 +131,11 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 	  when S12=> 
 		  control:= "11000000110010000000000000000010";
                   if (opcode1="0110") then                      --LM
-		  next_state:= S15; 
+			if (pe_flag='1') then
+		  		next_state:= S15;
+			else
+				next_state:= S1;
+			end if; 
                   elsif ( opcode1="1000") then                  --JAL 
 		  next_state:= S13; 
                   end if; 
@@ -149,11 +147,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  next_state:=S1; 
 	  when S15=> 
                   control:= "00110001000100010110000010110000"; 
-		  if( pe_flag='1') then 
-		  	next_state:= S12; 
-		  else 
-			next_state:=S1; 
-                  end if; 
+	  	  next_state:= S12; 
           when S16=> 
 		  control:= "00110001000100000000000000111011"; 
                   if( pe_flag='1') then 
@@ -161,9 +155,13 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  else 
 			next_state:=S1; 
                   end if; 
-	  when S17=> 
+	  when S17=> 						--SM
 		  control:= "00000000100000100000000000000000"; 
-                  next_state:=S16; 
+		  if (pe_flag='1') then
+		  	next_state:= S16;
+		  else
+			next_state:= S1;
+		  end if; 
               
     end case; 
 alu_a_sel <= control(31 downto 30); alu_b_sel<= control(29 downto 28);alu_op <= control(27);c_en <= control(26);z_en <= control(25);t1_en<= control(24);
