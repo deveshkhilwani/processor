@@ -18,7 +18,6 @@ entity datapath is
 	R7_write: in std_logic;
 	--IR
 	ir_en: in std_logic;
-	ir_sel: in std_logic;
 	--memory
 	mem_write_en: in std_logic;
 	adrs_sel: in std_logic_vector(1 downto 0);
@@ -87,8 +86,7 @@ begin
 	t3_in<=alu_out;
 
 	ir_modified<= ir_out(15 downto 8) & ir_new;
-	ir_in<= ir_modified when ir_sel='1' else
-		mem_out;
+	ir_in<= mem_out;
 
 --shift7
 	ls7: shift7 port map(x=>ir_out(8 downto 0),y=>ls_out);
