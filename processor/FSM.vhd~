@@ -11,6 +11,7 @@ entity FSM is
 	--alu
 	alu_a_sel,alu_b_sel:out std_logic_vector(1 downto 0);
 	alu_op: out std_logic;
+	alu_b_sel_3:out std_logic; 
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:out std_logic;
 	--RF
@@ -40,7 +41,7 @@ architecture hardon of FSM is
 begin
 process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
       variable next_state: FSM_State;
-      variable control: std_logic_vector(31 downto 0);
+      variable control: std_logic_vector(32 downto 0);
       
    begin
 	 -- defaults
@@ -50,10 +51,10 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
     case S is 
           when S1=>
                   next_state := S2;
-                  control := "01110000001000001000000001000000";  
+                  control := "011100000010000010000000010000000";  
               
           when S2 =>
-                  control := "01010001110000000000000000010000";
+                  control := "010100011100000000000000000100000";
                   if (opcode1="0000" or opcode1="0010") then 
 			if (opcode2="00") then 
                   		next_state := S3;
@@ -88,7 +89,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
  
           when S3=>
                  
-                  control := "00101110010000000000000000000000"; 
+                  control := "001011100100000000000000000000000"; 
 		  if (opcode1="0000" or opcode1="0010") then    --ADD or NAND instructions 
 			next_state:= S4;                               
             	   
@@ -98,38 +99,38 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 	  
 	  when S4=> 
 		  next_state:= S1;
-		  control := "00000000000000010100000100000000"; 
+		  control := "000000000000000101000001000000000"; 
           when S5=> 
-		  control :="00010000011001000000000000000100"; 
+		  control :="000100000110010000000000000001000"; 
 		  if ( opcode1="0001") then                      -- ADI 
 			next_state:= S6; 
                   elsif (opcode1="0100") then                    -- LW
 			next_state:=S8; 
                   end if; 
 	  when S6=> 
-		  control:= "00010110000000010010000100000000"; 
+		  control:= "000101100000000100100001000000000"; 
 		  next_state:= S1; 
           when S7=>
-		  control:= "10010000010000000000000000000000"; 
+		  control:= "100100000100000000000000000000000"; 
 		  if ( opcode1="0100") then                      -- LW 
 		 	next_state:= S5; 
 		  elsif (opcode1="0101") then                    -- SW 
 			next_state:=S9;                         
 		  end if; 
           when S8=> 
-		  control:= "00000000000000010000000110000000";
+		  control:= "000000000000000100000001100000001";
 		  next_state:= S1;  
 	  when S9=> 
-		  control:= "00000000000000000000000000001100";
+		  control:= "000000000000000000000000000011000";
 		  next_state:= S1; 
 	  when S10=> 
-		  control:= "00101000000000001001000000000000"; 
+		  control:= "001010000000000010010000000000000"; 
 		  next_state:= S1; 
           when S11=> 
-		  control:= "00000000000000011000100100000000"; 
+		  control:= "000000000000000110001001000000000"; 
 		  next_state:= S1;
 	  when S12=> 
-		  control:= "11000000110010000000000000000010";
+		  control:= "110000001100100000000000000000100";
                   if (opcode1="0110") then                      --LM
 			if (pe_flag='1') then
 		  		next_state:= S15;
@@ -140,23 +141,23 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  next_state:= S13; 
                   end if; 
           when S13=> 
-		  control:= "00000000000000011000111110000000"; 
+		  control:= "000000000000000110001111100000000"; 
 		  next_state:=S1; 
 	  when S14=> 
-		  control:= "00000000000000010000000000000000"; 
+		  control:= "000000000000000100000000000000000"; 
 		  next_state:=S1; 
 	  when S15=> 
-                  control:= "00110001000100010110000010110000"; 
+                  control:= "001100010001000101100000101100000"; 
 	  	  next_state:= S12; 
           when S16=> 
-		  control:= "00110001000100000000000000111011"; 
+		  control:= "001100010001000000000000001110110"; 
                   if( pe_flag='1') then 
 		  	next_state:= S17; 
 		  else 
 			next_state:=S1; 
                   end if; 
 	  when S17=> 						--SM
-		  control:= "00000000100000100000000000000000"; 
+		  control:= "000000001000001000000000000000000"; 
 		  if (pe_flag='1') then
 		  	next_state:= S16;
 		  else
@@ -164,10 +165,10 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  end if; 
               
     end case; 
-alu_a_sel <= control(31 downto 30); alu_b_sel<= control(29 downto 28);alu_op <= control(27);c_en <= control(26);z_en <= control(25);t1_en<= control(24);
-t2_en <= control(23);t3_en <= control(22);Tp_en <= control(21);t1_sel <= control(20);t2_sel <= control(19);Tp_sel <= control(18);
-A2_sel <= control(17);RF_write <= control(16);R7_write <= control(15);A3_sel <= control(14 downto 13);data_sel <= control(12 downto 10);D3_sel <= control(9 downto 7);
-IR_en<=control(6);PE_sel<= control(5);PE_en <= control(4);mem_write_enable <= control(3);address_sel <= control(2 downto 1);mem_in_sel <= control(0);     
+alu_a_sel <= control(32 downto 31); alu_b_sel<= control(30 downto 29);alu_op <= control(28);c_en <= control(27);z_en <= control(26);t1_en<= control(25);
+t2_en <= control(24);t3_en <= control(23);Tp_en <= control(22);t1_sel <= control(21);t2_sel <= control(20);Tp_sel <= control(19);
+A2_sel <= control(18);RF_write <= control(17);R7_write <= control(16);A3_sel <= control(15 downto 14);data_sel <= control(13 downto 11);D3_sel <= control(10 downto 8);
+IR_en<=control(7);PE_sel<= control(6);PE_en <= control(5);mem_write_enable <= control(4);address_sel <= control(3 downto 2);mem_in_sel <= control(1);alu_b_sel_3<=control(0);      
 
                   
                   
