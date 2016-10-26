@@ -123,7 +123,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  control:= "00000000000000000000000000001100";
 		  next_state:= S1; 
 	  when S10=> 
-		  control:= "00100000000000001001000000000000"; 
+		  control:= "00101000000000001001000000000000"; 
 		  next_state:= S1; 
           when S11=> 
 		  control:= "00000000000000011000100100000000"; 

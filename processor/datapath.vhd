@@ -7,7 +7,8 @@ entity datapath is
    port(clk,reset: in std_logic;
 	--alu
 	op_code_sel:in std_logic;
-	alu_a_sel,alu_b_sel:in std_logic_vector(1 downto 0);
+	alu_a_sel:in std_logic_vector(1 downto 0);
+	alu_b_sel:in std_logic_vector(2 downto 0);
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:in std_logic;
 	--RF
@@ -40,6 +41,7 @@ architecture fullon of datapath is
 	signal op_code: std_logic_vector(1 downto 0);
 	signal c_in,c_out,z_in,z_out: std_logic_vector(0 downto 0);
 	constant c1: std_logic_vector(15 downto 0):=(0=>'1',others=>'0');
+	constant c0: std_logic_vector(15 downto 0):=(others=>'0');
 begin
 	instruction_part1<=ir_out(15 downto 12);
 	instruction_part2<=ir_out(1 downto 0);
@@ -60,10 +62,11 @@ begin
 		t2_out when alu_a_sel="10" else
 		tp_out when alu_a_sel="11";
 
-	alu_b<= se9_out when alu_b_sel="00" else
-		se6_out when alu_b_sel="01" else
-		t2_out when alu_b_sel="10" else
-		c1 when alu_b_sel="11";
+	alu_b<= se9_out when alu_b_sel="000" else
+		se6_out when alu_b_sel="001" else
+		t2_out when alu_b_sel="010" else
+		c1 when alu_b_sel="011" else
+		c0;
 	op_code<= "00" when op_code_sel='0' else
 		  ir_out(14 downto 13);			
 	--instruction opcode for add is 0000 => op_code is"00" i.e. addition

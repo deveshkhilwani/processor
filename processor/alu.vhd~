@@ -7,7 +7,7 @@ entity alu is
    port (x,y: in std_logic_vector(15 downto 0); z: out std_logic_vector(15 downto 0);
 	carry,zero: out std_logic;
 	--control signals
-	op_code:in std_logic_vector(1 downto 0));
+	op_code:in std_logic_vector(2 downto 0));
 end entity;
 
 architecture paratha of alu is
@@ -21,7 +21,7 @@ begin
 	op3: xorer port map (x=>x, y=>y, z=>xor_out);
 
 	alu_out<=add_out(15 downto 0) when op_code="00" else
-	   nand_out when op_code="10" else
+	   nand_out when op_code="01" else
 	   xor_out;
 	
 	z<=alu_out;

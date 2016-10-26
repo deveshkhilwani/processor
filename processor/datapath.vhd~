@@ -7,7 +7,8 @@ entity datapath is
    port(clk,reset: in std_logic;
 	--alu
 	op_code_sel:in std_logic;
-	alu_a_sel,alu_b_sel:in std_logic_vector(1 downto 0);
+	alu_a_sel:in std_logic_vector(1 downto 0);
+	alu_b_sel:in std_logic_vector(2 downto 0);
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:in std_logic;
 	--RF
@@ -46,7 +47,7 @@ begin
 --registers
 	t1: DataRegister generic map(data_width=>16) port map(Din=>t1_in , Dout=>t1_out , Enable=>t1_en , clk=>clk);
 	t2: DataRegister generic map(data_width=>16) port map(Din=>t2_in , Dout=>t2_out , Enable=>t2_en , clk=>clk);
-	t3: DataRegister generic map(data_width=>16) port map(Din=>t3_in , Dout=>t1_out , Enable=>t3_en , clk=>clk);
+	t3: DataRegister generic map(data_width=>16) port map(Din=>t3_in , Dout=>t3_out , Enable=>t3_en , clk=>clk);
 	tp: DataRegister generic map(data_width=>16) port map(Din=>tp_in , Dout=>tp_out , Enable=>tp_en , clk=>clk);
 	ir: DataRegister generic map(data_width=>16) port map(Din=>ir_in , Dout=>ir_out , Enable=>ir_en , clk=>clk);
 	c: DataRegister generic map(data_width=>1) port map(Din=>c_in , Dout=>c_out , Enable=>c_en , clk=>clk);
@@ -60,10 +61,11 @@ begin
 		t2_out when alu_a_sel="10" else
 		tp_out when alu_a_sel="11";
 
-	alu_b<= se9_out when alu_b_sel="00" else
-		se6_out when alu_b_sel="01" else
-		t2_out when alu_b_sel="10" else
-		c1 when alu_b_sel="11";
+	alu_b<= se9_out when alu_b_sel="000" else
+		se6_out when alu_b_sel="001" else
+		t2_out when alu_b_sel="010" else
+		c1 when alu_b_sel="011" else
+		c0;
 	op_code<= "00" when op_code_sel='0' else
 		  ir_out(14 downto 13);			
 	--instruction opcode for add is 0000 => op_code is"00" i.e. addition
