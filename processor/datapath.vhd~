@@ -29,7 +29,8 @@ entity datapath is
 	--output
 	instruction_part1:out std_logic_vector(3 downto 0);
 	instruction_part2:out std_logic_vector(1 downto 0);
-	pe_flag,carry,zero: out std_logic);
+	pe_flag,carry,zero: out std_logic;
+	rout_0,rout_1,rout_2,rout_3,rout_4,rout_5,rout_6,rout_7: out std_logic_vector(7 downto 0));
 end entity;
 
 architecture fullon of datapath is
@@ -41,6 +42,7 @@ architecture fullon of datapath is
 	signal op_code: std_logic_vector(1 downto 0);
 	signal c_in,c_out,z_in,z_out: std_logic_vector(0 downto 0);
 	constant c1: std_logic_vector(15 downto 0):=(0=>'1',others=>'0');
+	constant c0: std_logic_vector(15 downto 0):=(others=>'0');
 begin
 	instruction_part1<=ir_out(15 downto 12);
 	instruction_part2<=ir_out(1 downto 0);
@@ -110,7 +112,8 @@ begin
 		R7_out;
 	
 	RF: reg_file port map(ir_out(11 downto 9),A2_in,A3_in,D3_in,D1,D2,
-				 clk,reset,alu_out,t2_out,t3_out,R7_out,z_in(0),data_sel,RF_write,R7_write);
+				 clk,reset,alu_out,t2_out,t3_out,R7_out,z_in(0),data_sel,RF_write,R7_write,
+				rout_0,rout_1,rout_2,rout_3,rout_4,rout_5,rout_6,rout_7);
 
 --	R7_in<= c0 when reset='1' else
 --		alu_out when data_sel="000" else

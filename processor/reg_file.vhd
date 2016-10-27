@@ -20,7 +20,8 @@ entity reg_file is
 	--control signals
 	data_sel: in std_logic_vector(2 downto 0);
 	RF_write: in std_logic;
-	R7_write: in std_logic);
+	R7_write: in std_logic;
+	rout_0,rout_1,rout_2,rout_3,rout_4,rout_5,rout_6,rout_7: out std_logic_vector(15 downto 0));
 end entity;
 
 architecture mudi of reg_file is
@@ -82,5 +83,13 @@ begin
 	        t2_out when data_sel="010" else
 	        t3_out when data_sel="011" else
 		zero_t3_out;
+	rout_0<=r_out(0);
+	rout_1<=r_out(1);
+	rout_2<=r_out(2);
+	rout_3<=r_out(3);
+	rout_4<=r_out(4);
+	rout_5<=r_out(5);
+	rout_6<=r_out(6);
+	rout_7<=r_out(7);
 end mudi;
 

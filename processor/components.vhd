@@ -9,7 +9,8 @@ component datapath is
    port(clk,reset: in std_logic;
 	--alu
 	op_code_sel:in std_logic;
-	alu_a_sel,alu_b_sel:in std_logic_vector(1 downto 0);
+	alu_a_sel:in std_logic_vector(1 downto 0);
+	alu_b_sel:in std_logic_vector(2 downto 0);
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:in std_logic;
 	--RF
@@ -30,7 +31,8 @@ component datapath is
 	--output
 	instruction_part1:out std_logic_vector(3 downto 0);
 	instruction_part2:out std_logic_vector(1 downto 0);
-	pe_flag,carry,zero: out std_logic);
+	pe_flag,carry,zero: out std_logic;
+	rout_0,rout_1,rout_2,rout_3,rout_4,rout_5,rout_6,rout_7: out std_logic_vector(15 downto 0));
 end component;
 
 
@@ -42,6 +44,7 @@ component FSM is
 	--alu
 	alu_a_sel,alu_b_sel:out std_logic_vector(1 downto 0);
 	alu_op: out std_logic;
+	alu_b_sel_3:out std_logic; 
 	--registers
 	c_en,z_en,t1_en,t2_en,t3_en,tp_en,t1_sel,t2_sel,tp_sel:out std_logic;
 	--RF
@@ -113,7 +116,8 @@ component reg_file is
 	--control signals
 	data_sel: in std_logic_vector(2 downto 0);
 	RF_write: in std_logic;
-	R7_write: in std_logic);
+	R7_write: in std_logic;
+	rout_0,rout_1,rout_2,rout_3,rout_4,rout_5,rout_6,rout_7: out std_logic_vector(15 downto 0));
 end component;
 
 component shift7 is

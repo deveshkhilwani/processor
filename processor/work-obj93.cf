@@ -1,54 +1,54 @@
 v 3
-file . "testbench.vhd" "20161024104742.000" "20161026222929.451":
-  entity testbench at 1( 0) + 0 on 1531;
-  architecture behave of testbench at 10( 148) + 0 on 1532;
-file . "xorer.vhd" "20161024094022.000" "20161026222929.518":
-  entity xorer at 1( 0) + 0 on 1535;
-  architecture waddup of xorer at 7( 159) + 0 on 1536;
-file . "sign_ext9.vhd" "20161024094022.000" "20161026222929.424":
-  entity sign_ext9 at 1( 0) + 0 on 1529;
-  architecture taes of sign_ext9 at 8( 160) + 0 on 1530;
-file . "shift7.vhd" "20161024094022.000" "20161026222929.375":
-  entity shift7 at 1( 0) + 0 on 1525;
-  architecture tittaes of shift7 at 8( 157) + 0 on 1526;
-file . "reg_file.vhd" "20161024094022.000" "20161026222929.101":
-  entity reg_file at 1( 0) + 0 on 1521;
-  architecture mudi of reg_file at 26( 719) + 0 on 1522;
-file . "nander.vhd" "20161024094022.000" "20161026222928.972":
-  entity nander at 1( 0) + 0 on 1517;
-  architecture waddup of nander at 7( 160) + 0 on 1518;
-file . "FSM.vhd" "20161026165852.000" "20161026222928.845":
-  entity fsm at 1( 0) + 0 on 1513;
-  architecture hardon of fsm at 38( 957) + 0 on 1514;
-file . "DataRegister.vhd" "20161024094022.000" "20161026222928.776":
-  entity dataregister at 1( 0) + 0 on 1509;
-  architecture behave of dataregister at 9( 258) + 0 on 1510;
-file . "adder.vhd" "20161024094022.000" "20161026222928.166":
-  entity adder at 1( 0) + 0 on 1502;
-  architecture serial of adder at 6( 158) + 0 on 1503;
-file . "components.vhd" "20161024094022.000" "20161026222928.570":
-  package components at 1( 0) + 0 on 1506;
-file . "alu.vhd" "20161026150155.000" "20161026222928.526":
-  entity alu at 1( 0) + 0 on 1504;
-  architecture paratha of alu at 13( 286) + 0 on 1505;
-file . "datapath.vhd" "20161026150411.000" "20161026222928.597":
-  entity datapath at 1( 0) + 0 on 1507;
-  architecture fullon of datapath at 35( 862) + 0 on 1508;
-file . "decoder.vhd" "20161024094022.000" "20161026222928.801":
-  entity decoder at 1( 0) + 0 on 1511;
-  architecture hood of decoder at 7( 157) + 0 on 1512;
-file . "memory.vhd" "20161024204550.000" "20161026222928.933":
-  entity bram at 1( 0) + 0 on 1515;
-  architecture behavioral of bram at 14( 326) + 0 on 1516;
-file . "priority_encoder.vhd" "20161024182723.000" "20161026222928.998":
-  entity priority_encoder at 1( 0) + 0 on 1519;
-  architecture arrange of priority_encoder at 13( 277) + 0 on 1520;
-file . "RF_Testbench.vhd" "20161024094022.000" "20161026222929.286":
-  entity rf_testbench at 1( 0) + 0 on 1523;
-  architecture behave of rf_testbench at 11( 162) + 0 on 1524;
-file . "sign_ext6.vhd" "20161024094022.000" "20161026222929.400":
-  entity sign_ext6 at 1( 0) + 0 on 1527;
-  architecture taes of sign_ext6 at 8( 160) + 0 on 1528;
-file . "TopLevel.vhd" "20161024094022.000" "20161026222929.480":
-  entity toplevel at 1( 0) + 0 on 1533;
-  architecture behave of toplevel at 10( 149) + 0 on 1534;
+file . "TopLevel.vhd" "20161026194629.000" "20161027020655.227":
+  entity toplevel at 1( 0) + 0 on 2241;
+  architecture behave of toplevel at 11( 242) + 0 on 2242;
+file . "sign_ext6.vhd" "20161024094022.000" "20161027020655.148":
+  entity sign_ext6 at 1( 0) + 0 on 2235;
+  architecture taes of sign_ext6 at 8( 160) + 0 on 2236;
+file . "RF_Testbench.vhd" "20161024094022.000" "20161027020655.037":
+  entity rf_testbench at 1( 0) + 0 on 2231;
+  architecture behave of rf_testbench at 11( 162) + 0 on 2232;
+file . "priority_encoder.vhd" "20161024182723.000" "20161027020654.759":
+  entity priority_encoder at 1( 0) + 0 on 2227;
+  architecture arrange of priority_encoder at 13( 277) + 0 on 2228;
+file . "memory.vhd" "20161026203651.000" "20161027020654.695":
+  entity bram at 1( 0) + 0 on 2223;
+  architecture behavioral of bram at 14( 326) + 0 on 2224;
+file . "decoder.vhd" "20161024094022.000" "20161027020654.576":
+  entity decoder at 1( 0) + 0 on 2219;
+  architecture hood of decoder at 7( 157) + 0 on 2220;
+file . "datapath.vhd" "20161026194536.000" "20161027020654.374":
+  entity datapath at 1( 0) + 0 on 2215;
+  architecture fullon of datapath at 36( 955) + 0 on 2216;
+file . "alu.vhd" "20161026150155.000" "20161027020656.897":
+  entity alu at 1( 0) + 0 on 2245;
+  architecture paratha of alu at 13( 286) + 0 on 2246;
+file . "components.vhd" "20161026194605.000" "20161027020654.345":
+  package components at 1( 0) + 0 on 2214;
+file . "adder.vhd" "20161024094022.000" "20161027020654.271":
+  entity adder at 1( 0) + 0 on 2210;
+  architecture serial of adder at 6( 158) + 0 on 2211;
+file . "DataRegister.vhd" "20161024094022.000" "20161027020654.551":
+  entity dataregister at 1( 0) + 0 on 2217;
+  architecture behave of dataregister at 9( 258) + 0 on 2218;
+file . "FSM.vhd" "20161026181757.000" "20161027020654.621":
+  entity fsm at 1( 0) + 0 on 2221;
+  architecture hardon of fsm at 38( 957) + 0 on 2222;
+file . "nander.vhd" "20161024094022.000" "20161027020654.733":
+  entity nander at 1( 0) + 0 on 2225;
+  architecture waddup of nander at 7( 160) + 0 on 2226;
+file . "reg_file.vhd" "20161026194525.000" "20161027020654.863":
+  entity reg_file at 1( 0) + 0 on 2229;
+  architecture mudi of reg_file at 27( 812) + 0 on 2230;
+file . "shift7.vhd" "20161024094022.000" "20161027020655.123":
+  entity shift7 at 1( 0) + 0 on 2233;
+  architecture tittaes of shift7 at 8( 157) + 0 on 2234;
+file . "sign_ext9.vhd" "20161024094022.000" "20161027020655.172":
+  entity sign_ext9 at 1( 0) + 0 on 2237;
+  architecture taes of sign_ext9 at 8( 160) + 0 on 2238;
+file . "xorer.vhd" "20161024094022.000" "20161027020655.271":
+  entity xorer at 1( 0) + 0 on 2243;
+  architecture waddup of xorer at 7( 159) + 0 on 2244;
+file . "testbench.vhd" "20161026201055.000" "20161027020655.197":
+  entity testbench at 1( 0) + 0 on 2239;
+  architecture behave of testbench at 8( 109) + 0 on 2240;

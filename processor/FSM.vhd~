@@ -54,7 +54,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
                   control := "011100000010000010000000010000000";  
               
           when S2 =>
-                  control := "010100011100000000000000000100000";
+                  control := "110100011100000000000000000100000";
                   if (opcode1="0000" or opcode1="0010") then 
 			if (opcode2="00") then 
                   		next_state := S3;
@@ -99,7 +99,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 	  
 	  when S4=> 
 		  next_state:= S1;
-		  control := "000000000000000101000001000000000"; 
+		  control := "000000000000000101000101000000000"; 
           when S5=> 
 		  control :="000100000110010000000000000001000"; 
 		  if ( opcode1="0001") then                      -- ADI 
@@ -108,7 +108,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 			next_state:=S8; 
                   end if; 
 	  when S6=> 
-		  control:= "000101100000000100100001000000000"; 
+		  control:= "000101100000000100100101000000000"; 
 		  next_state:= S1; 
           when S7=>
 		  control:= "100100000100000000000000000000000"; 
@@ -118,7 +118,7 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 			next_state:=S9;                         
 		  end if; 
           when S8=> 
-		  control:= "000000000000000100000001100000001";
+		  control:= "000000100000000100000101100000001";
 		  next_state:= S1;  
 	  when S9=> 
 		  control:= "000000000000000000000000000011000";
@@ -144,10 +144,10 @@ process(S,opcode1,opcode2,pe_flag,carry,zero,clk, reset)
 		  control:= "000000000000000110001111100000000"; 
 		  next_state:=S1; 
 	  when S14=> 
-		  control:= "000000000000000100000000000000000"; 
+		  control:= "000000000000000100000100000000000"; 
 		  next_state:=S1; 
 	  when S15=> 
-                  control:= "001100010001000101100000101100000"; 
+                  control:= "001100010001000101100100101100000"; 
 	  	  next_state:= S12; 
           when S16=> 
 		  control:= "001100010001000000000000001110110"; 
